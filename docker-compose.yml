@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3306:3306"
+
+  node_app:
+    build: .
+    container_name: node-app
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/app
